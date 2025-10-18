@@ -1,0 +1,32 @@
+package JDBC;
+
+import java.sql.Connection;
+import java.sql.DriverManager; // Needed for DriverManager
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class PartA {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://bytexldb.com:5051/db_43yzfksca";
+        String username = "user_43yzfksca";
+        String pswd = "p43yzfksca";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver"); // Load MySQL driver
+            Connection con = DriverManager.getConnection(url, username, pswd); // Connect
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from employees");
+
+            while (rs.next()) {
+                System.out.println(rs.getInt(1) + " " + rs.getString(3) + " ");
+            }
+
+            rs.close();
+            stmt.close();
+            con.close();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
